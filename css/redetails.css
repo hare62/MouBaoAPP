@@ -1,0 +1,65 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.main{
+	width: 7.5rem;
+	
+}
+.top{
+	
+	width: 7.5rem;
+	height: 1.5rem;
+	background: #A82121;
+}
+.top span{
+	line-height: 1.5rem;
+	float: left;
+	width: 2.5rem;
+	height: 1.5rem;
+	font-size:28px;
+}
+.top span img{
+	width: 1.8rem;
+	height: 1.0rem;
+	margin-top: 0.25rem;
+	margin-left: 0.35rem;
+}
+.top span b{
+	font-weight: 100;
+	font-size: 45px;
+	margin-left: 0.35rem;
+}
+.content{
+	margin: 0 0.2rem;
+	width: 7.1rem;
+	/*background: olivedrab;*/
+}
+.content-tu{
+	width: 7.1rem;
+	height:5.7rem;
+	overflow: hidden;
+}
+.content-foot{
+	/*height: 4rem;*/
+	width: 100%;
+	font-size: 14px;
+}
+.foot{
+	position: fixed;
+    bottom: -7px;
+	height: 1.5rem;
+	width: 100%;
+	padding: 5px;
+	display: flex;
+    flex-direction: row;
+}
+.item{
+	height: 100%;
+	width: 20%;
+}
+.item img{
+	display: block;
+	height: 100%;
+	width: 100%;
+}

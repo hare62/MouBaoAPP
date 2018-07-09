@@ -1,0 +1,152 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.main{
+	width: 7.5rem;
+	padding-bottom: 0.5rem;
+}
+.tit{
+	height: 1.5rem;
+	line-height: 1.5rem;
+	width: 100%;
+	position: relative;
+	background: #A90506;
+	text-align: center;
+}
+.text{
+	font-size: 0.5rem;
+	color: white;
+}
+.img{
+	width: 2rem;
+	height: 1rem;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -0.6rem;
+}
+.img img{
+	height: 100%;
+	width: 100%;
+}
+.num{
+	height: 1.2rem;
+	padding: 0.3rem;
+	font-size: 18px;
+	background:#cac0c0;
+	color: white;
+}
+.price{
+	color: #A32626;
+}
+.content{
+	padding: 0.3rem;
+	height: 4rem;
+	display: flex;
+	flex-direction: row;
+	border-bottom: 1px solid #747474;
+}
+.left{
+	width: 40%;
+	height: 100%;
+	flex-wrap: wrap;
+}
+.center{
+	padding: 0.2rem;
+	width: 50%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+	line-height: 2;
+}
+.right{
+	width: 10%;
+	height: 100%;
+	background: white;
+}
+.left img{
+	width: 100%;
+	height: 100%;
+	
+}
+.pre{
+	display: flex;
+	flex-direction: row;
+}
+.shu{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+button{
+	height: 0.5rem;
+	width: 0.5rem;
+	margin: 0 0.1rem;
+	background: #A0A0A0;
+}
+input{
+	width: 0.7rem;
+	height: 0.5rem;
+	border: 1px solid #A0A0A0;
+	border-radius: 2px;
+}
+.m{
+	height: 0.5rem;
+	width: 1rem;
+	
+}
+.right img{
+	float: left;
+}
+.foot{
+	position: fixed;
+	bottom:0;
+	height: 1.5rem;
+	width: 7.5rem;
+	background: #484850;
+	display: flex;
+	flex-direction: row;
+	
+}
+.foot a{
+	width: 20%;
+	height: 100%;
+}
+.foot a img{
+	width: 100%;
+	height: 100%;
+}
+.mainmian{
+	width: 7.5rem;
+	padding-bottom: 05rem;
+}
+p{
+	overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.shuliang{
+	text-align: center;
+}
+.foot{
+	position: fixed;
+    bottom: -7px;
+	height: 1.5rem;
+	width: 100%;
+	padding: 5px;
+	display: flex;
+    flex-direction: row;
+}
+.item{
+	height: 100%;
+	width: 20%;
+}
+.item img{
+	display: block;
+	height: 100%;
+	width: 100%;
+}

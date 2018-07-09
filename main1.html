@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/main1.css" />
+	</head>
+	<body>
+		<div class="main">
+			<div class="tit">
+				<div class="text">新品上市</div>
+				<div class="img"><img src="img/1530346404(1).jpg" /></div>
+			</div>
+			<!--导航条-->
+			<div class="bar">
+				<a href="#" class="icon"><img src="img/1530365278(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365304(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365382(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365356(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365324(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365304(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365278(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365495(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/1530365457(1).jpg" /></a>
+				<a href="#" class="icon"><img src="img/" /></a>
+			</div>
+			<div class="content">
+				<div class="sub">
+					<div class="tu"><img src="img/1530368198(1).jpg" /></div>
+					<div class="nam">
+						<p>T恤</p>
+					</div>
+					<div class="price">
+						<p>$49</p><del>$99</del></div>
+				</div>
+
+			</div>
+			<div class="foot">
+				<div class="item shouye"><img src="img/1530354251(1).jpg" /></div>
+				<div class="item fenye"><img src="img/1530354280(1).jpg" /></div>
+				<div class="item gouwuche"><img src="img/1530354302(1).jpg" /></div>
+				<div class="item woxiu"><img src="img/1530354330(1).jpg" /></div>
+				<div class="item more"><img src="img/1530354350(1).jpg" /></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			console.log($.cookie("userid"));
+//		 var name=window.location.search.split("=");
+//          //返回数据?name,lulululua
+//          var nameval=name.split(",");
+//          var username=nameval[1];
+//	           console.log(username);
+            
+		$(".text").click(function(){
+			var phone=$.cookie("phone");
+            console.log(phone); 
+		})
+
+			$(function() {
+				//先写一个对应index的渲染 ajax 然后根据索引号来进行渲染
+				var datashuju;//装商品接口返回来的数据
+				function xuanran(index) {
+					//接口：获取商品或列表
+					$.ajax({
+						type: "get",
+						url: "http://datainfo.duapp.com/shopdata/getGoods.php",
+						async: true,
+						dataType: "jsonp",
+						data: {
+							classID: index,
+						},
+						success: function(data) {
+							console.log(data);
+							datashuju=data;
+						    //先将数据清空处理
+							$(".content").empty();
+							for(var x = 0; x < data.length; x++) {
+								//渲染数据上去
+//								$(".content").append("<div class='sub'><div class='tu'><img src=" + data[x].goodsListImg + "></div><div class='nam'><p>" + data[x].goodsName + "</p></div><div class='price'><p>$" + data[x].price + "</p><del>$" + data[x].price + "</del></div></div>");
+                                $(".content").append(`<div class='sub'><div class='tu'>
+                                                  <img src="${data[x].goodsListImg } ">
+                                                  </div><div class='nam'><p>"${ data[x].goodsName } "</p>
+                                                  </div><div class='price'><p>$"${data[x].price } "</p>
+                                                  <del>$" ${data[x].price } "</del></div></div>`);
+							}
+						}
+					});
+				}
+//				默认goodsID为1的商品进行渲染
+				xuanran(1);
+				//点击小图标
+				//你要很清楚获取商品的goodsid的序列号是从1到13的，而我们点击事件所获取的下标是从0到10的，所以我们得到的索引号需要加1；
+				$(".icon").click(function() {
+					var index = $(this).index() + 1;
+					xuanran(index);//再调用这个函数进行相应渲染
+				})
+				//点击对应的商品来到对应商品的详情
+				$(document).on("click",".sub",function(){
+					var index=$(this).index();
+					var goosid=datashuju[index].goodsID
+					//获取到商品返回列表的goodsID
+					window.location.href="details.html?goodsid="+goosid;
+					window.location.href="details.html?name="+username;
+					
+				})
+				//点击购物车 跳到购物车
+				$(document).on("click",".gouwuche",function(){
+					window.location.href="shop.html?";
+				})
+                //点击首页，回到首页
+                $(document).on("click",".shouye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击分类，一样回到首页
+                $(document).on("click",".fenye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击我的秀。跳转到详情页面
+                 $(document).on("click",".woxiu",function(){
+                	window.location.href="details.html";
+                })
+                 //点击更多，跳转到详情页面
+                 $(document).on("click",".more",function(){
+                	window.location.href="redetails.html";
+                	})
+                })
+                
+		</script>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+}
+.mian{
+	height: 1.5rem;
+	width: 7.5rem;
+	padding-bottom: 0.5rem;
+}
+.tit{
+	height: 1.5rem;
+	width: 100%;
+	background: #B11F1F;
+	line-height: 1.5rem;
+	text-align: center;
+	font-size: 25px;
+	position: relative;
+	color: white;
+}
+.img{
+	position: absolute;
+	right: 0;
+	top:50%;
+	margin-top: -0.5rem;
+	height: 1rem;
+	width: 1.6rem;
+	
+}
+img{
+	height: 100%;
+	width: 100%;
+}
+.bar{
+	height: 1rem;
+	width: 100%;
+	background: #9A9FA5;
+	padding: 0.1rem;
+	display: flex;
+	flex-direction: row;
+	
+}
+.icon{
+	height: 100%;
+	width: 10%;
+	overflow: hidden;	
+}
+.icon img{
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+.content{
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	/*换行*/
+	background: #F3F4F6;
+	min-height: 4.72rem;
+}
+.sub{
+	font-size: 13px;
+	padding: 5px;
+	width: 50%;
+	height: 4rem;
+	display: flex;
+	flex-direction: column;
+	
+	
+}
+.price{
+	display: inline-block;
+}
+.price {
+	height: 10%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.nam {
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.tu {
+    height: 80%;
+    width: 100%;
+}
+.foot{
+	position: fixed;
+    bottom: -7px;
+	height: 1.5rem;
+	width: 100%;
+	padding: 5px;
+	display: flex;
+    flex-direction: row;
+}
+.item{
+	height: 100%;
+	width: 20%;
+}
+.item img{
+	display: block;
+	height: 100%;
+	width: 100%;
+}

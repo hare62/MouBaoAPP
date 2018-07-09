@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"> 	
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="css/redetails.css"/>
+	</head>
+	<body>
+		<div class="mian">
+			<div class="top">
+				
+				<span><b class="shangyiye"><</b></span>
+				<span>商品资料</span>
+				<span><img src="img/1530346404(1).jpg"/></span>
+			</div>
+			<div class="content">
+				<div class="content-tu">
+					<img class="imgg" style="width: 100%;height: 100%;" src="img/1530446802(1).jpg"/>
+				</div>
+				<div class="content-foot">
+					<!--<p>品牌名称：<span>美特斯邦威</span></p>
+					<p>商品名称：<span>美特斯邦威 迷底红色花朵印花短袖连衣裙</span></p>
+					<p>材质：面料：<span>65.5%粘纤维，34.5%棉</span>里料：<span>100%聚酯纤维</span></p>
+					<p>产地：<span>中国</span></p>
+					<p>商品编号：<span>695841235774</span></p>
+					<p>洗涤说明：<span>最高洗涤温度30度，缓和程序，不可漂白，悬挂晾干，熨斗底板最高温度110度，不可干洗</span></p>
+					<p>所属分类：<span>女款连衣裙</span></p>
+					<p>备注<:span>无匹配</:span></p>
+					<p>其他：<span>3554125</span></p>-->
+				</div>
+			</div>
+			<div class="foot">
+				<div class="item shouye"><img src="img/1530354251(1).jpg" /></div>
+				<div class="item fenye"><img src="img/1530354280(1).jpg" /></div>
+				<div class="item gouwuche"><img src="img/1530354302(1).jpg" /></div>
+				<div class="item woxiu"><img src="img/1530354330(1).jpg" /></div>
+				<div class="item more"><img src="img/1530354350(1).jpg" /></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var message=location.search;
+			console.log(message);
+			var val=message.split("=");
+			console.log(val)
+			var goodsid=val[1];
+			console.log(goodsid)
+			
+			$(function(){
+//				$("input").val("5");
+				$.ajax({
+					type:"get",
+					url:"http://datainfo.duapp.com/shopdata/getGoods.php",
+					async:true,
+					data:{
+						goodsID:goodsid
+					},
+					dataType:"jsonp",
+					success:function(data){
+						console.log(data)
+//						$(".delprice").text(data[0].price)
+//						$(".price").text(data[0].buynumber)
+//						$(".name").text(data[0].goodsName)
+//						var yy= JSON.parse(data[0].imgsUrl);
+                          //data[0].detail:里面的数据:"商品名称：茵曼 2015秋装新款文艺长袖格子衬衫百搭长袖衬衣女。商品毛重：120.00g。长袖衣门襟：单排扣。适用年龄：18-24周岁袖型"
+						console.log(data[0].detail.split("。"))
+						var ss=data[0].detail.split("。");
+//						将这个详情数据渲染上去
+						for(var x=0;x<ss.length;x++){
+							$(".content-foot").append("<p>"+ss[x]+"</p>");
+						}
+						//将图片的路径改成后台对应的数据
+						$(".imgg").attr("src",data[0].goodsListImg)
+					}
+				});
+				$(document).on("click",".shangyiye",function(){
+				    window.location.href="main1.html";
+				})
+				//点击购物车 跳到购物车
+				$(document).on("click",".gouwuche",function(){
+					window.location.href="shop.html?";
+				})
+                //点击首页，回到首页
+                $(document).on("click",".shouye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击分类，一样回到首页
+                $(document).on("click",".fenye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击我的秀。跳转到详情页面
+                 $(document).on("click",".woxiu",function(){
+                	window.location.href="details.html";
+                })
+                 //点击更多，跳转到详情页面
+                 $(document).on("click",".more",function(){
+                	window.location.href="redetails.html";
+                })
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/details.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<div class="top">
+				<span id="top-left">
+				</span>
+				<span id="top-center">
+					<b>商品资料</b>
+				</span>
+				<span id="top-right">
+					<img src="img/1530346404(1).jpg"/>
+				</span>
+			</div>
+			<div class="content">
+				<div class="content-top">
+					<ul class="datu">
+						<li ><img class="imges" src="img/1530411217(1).jpg"/></li>
+						<li><img  class="imges1" src="img/1530411217(1).jpg"/></li>
+						<li><img  class="imges2"  src="img/1530411217(1).jpg"/></li>
+					</ul>
+				</div>
+				<div class="content-center">
+					<ol class="icon">
+						<li></li>
+						<li></li>
+						<li></li>
+					</ol>
+				</div>
+				<div class="content-bottom">
+					
+					<p class="name">美特斯邦威 迷底红色花朵印花短袖连衣裙</p>
+					<p >  <span class="price">$85.00</span>      <del class="delprice">159</del></p>
+					<p class="number">购买人数：209</p>
+				</div>
+				<div class="sub-bottom">
+					<span>i</span>
+					<span calss="shangping">查看商品详情</span>
+					<span>></span>
+				</div>
+			</div>
+			<div class="foot">
+				<span class="gouwu">添加到购物车</span>
+			</div>
+				
+			</div>
+			<div class="foot1">
+				<div class="item shouye"><img src="img/1530354251(1).jpg" /></div>
+				<div class="item fenye"><img src="img/1530354280(1).jpg" /></div>
+				<div class="item gouwuche"><img src="img/1530354302(1).jpg" /></div>
+				<div class="item woxiu"><img src="img/1530354330(1).jpg" /></div>
+				<div class="item more"><img src="img/1530354350(1).jpg" /></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var username=$.cookie("userid");
+			//接受main1.html返回过来的数据：window.location.href="details.html?goodsid="+goosid;
+			var url=window.location.search.split("=");
+//			console.log(url)：  返回的是这个/ ["?goodsid", "45"]
+//          我们只需要这个数组的第二个数据，第二个数据 下表其实就是1【0，1】；
+//          获取到商品的goodsID
+			var goodsid=url[1];
+		      <!--点击小圆点-->
+		      $(".icon li").click(function(){
+		      var index=$(this).index();
+		      $(".datu").eq(index).css("margin-left",-index*750+"px");
+		      })
+		      
+			$(function(){
+	           $("input").val("5");
+				$.ajax({
+					type:"get",
+					url:"http://datainfo.duapp.com/shopdata/getGoods.php",
+					async:true,
+					data:{
+						goodsID:goodsid
+					},
+					dataType:"jsonp",
+					success:function(data){
+						console.log(data)
+						//就是更换数据 没什么好说的
+						$(".delprice").text(data[0].price);
+						$(".price").text(data[0].buynumber);
+						$(".name").text(data[0].goodsName);
+						//这边imgsUrl有三张图片，实现轮播这样的三张图片
+						var yy= JSON.parse(data[0].imgsUrl);
+//						console.log(yy): ["https://img.alicdn.com/imgextra/i2/2066156460/TB2_XNofpXXXXbTXpXXXXXXXXXX_!!2066156460.jpg", 
+//						                  "https://img.alicdn.com/imgextra/i4/2066156460/TB27JVBfpXXXXc1XXXXXXXXXXXX_!!2066156460.jpg", 
+//						                  "https://img.alicdn.com/imgextra/i4/2066156460/TB2IspqfpXXXXbFXpXXXXXXXXXX_!!2066156460.jpg",
+//						                  "https://img.alicdn.com/imgextra/i1/2066156460/TB2IP4RfpXXXXXvXXXXXXXXXXXX_!!2066156460.jpg"]
+                        //获取对应的图片 用attr("",   )；函数，这个跟那个pasword和文本text类似
+                        //文本获取三张图片
+						$(".imges").attr("src",yy[0]);
+						$(".imges1").attr("src",yy[1]);
+						$(".imges2").attr("src",yy[2]);
+					}
+				});
+				//ajax结束
+				//点击"添加到购物车这个按钮"直接跳转到shop.html网页
+				var num=0;
+				$(document).on("click",".gouwu",function(){
+					//点击添加到购物车，数量自动加一
+					//t调到更新购物车这个网页
+					num++;
+					$.get(" http://datainfo.duapp.com/shopdata/updatecar.php",{
+						userID:"lulululua",
+						goodsID:goodsid,
+						number:num
+					},function(data){
+						window.location.href="shop.html"
+					})
+				})
+				//点击购物车 跳到购物车
+				$(document).on("click",".gouwuche",function(){
+					window.location.href="shop.html?";
+				})
+                //点击首页，回到首页
+                $(document).on("click",".shouye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击分类，一样回到首页
+                $(document).on("click",".fenye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击我的秀。跳转到详情页面
+                 $(document).on("click",".woxiu",function(){
+                	window.location.href="details.html";
+                })
+                 //点击更多，跳转到详情页面
+                 $(document).on("click",".more",function(){
+                	window.location.href="redetails.html";
+                })
+                   //点击商品详细 跳转到商品界面
+                   $(".sub-bottom").click(function(){
+//                 	alert("1")
+                    console.log(goodsid)
+                   	window.location.href="redetails.html?goodsid="+goodsid;
+                   })
+			})
+		</script>
+	</body>
+</html>

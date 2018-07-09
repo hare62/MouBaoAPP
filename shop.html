@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/rem.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="tit">
+				<div class="text">购物车</div>
+				<div class="img"><img src="img/1530346404(1).jpg" alt="" /></div>
+			</div>
+			<div class="num">
+				<span calss="btn">商品数量：</span><span class="n">2</span>&nbsp;&nbsp<span>应付总额：</span><span>$</span><span class="price">589</span>
+
+			</div>
+			<div class="mainmain">
+				<!--<div class="content">
+					<div class="left"><img src="img/1530427266(1).jpg" /></div>
+					<div class="center">
+						<p clss="detail">ESPRI 气质V领玫红</p>
+						<p>T恤</p>
+						<div class="pre">
+							<p>单价:</p>
+							<p>$199</p>
+						</div>
+						<div class="shu">
+							<p class="m">数量:</p> <button class="jian">-</button><input class="shuliang" type="text" value="8" /><button class="jia">+	</button></div>
+					</div>
+					<div class="right">
+						<img src="img/1530428433(1).jpg" />
+					</div>
+				</div>-->
+			</div>
+
+		</div>
+		<div class="foot">
+				<div class="item shouye"><img src="img/1530354251(1).jpg" /></div>
+				<div class="item fenye"><img src="img/1530354280(1).jpg" /></div>
+				<div class="item gouwuche"><img src="img/1530354302(1).jpg" /></div>
+				<div class="item woxiu"><img src="img/1530354330(1).jpg" /></div>
+				<div class="item more"><img src="img/1530354350(1).jpg" /></div>
+			</div>
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			
+			
+		     var username=$.cookie("userid");
+		     console.log(username);
+			//查看购物车
+			var shuval=0;//装购物车里面的商品的总的数量
+			var	datashuju;//装购物车里面的商品
+             //var user ID=null;//先放着  要用cookie保存起来 ，页面之间传值
+             //商品总的价格：对应的商品价格以及对应的商品数量相乘  然后将其相加 最后呈现在相应位置就行
+             var price=0;//装购物车里面的商品的总的价格
+			$.ajax({
+				type: "get",
+				url: "http://datainfo.duapp.com/shopdata/getCar.php",
+				async: true,
+				dataType: "jsonp",
+				data: {
+					//用户id要自己传过来。这边传了一个死的数据而已
+					userID: "lulululua",
+				},
+				success: function(data) {
+					//$(".mainmain").empty();
+					console.log(data);//“查看购物车”返回的数据是什么？
+					datashuju = data; //"查看购物车"返回的数据赋值给datashuju变量
+					for(var x = 0; x < data.length; x++) {
+              //console.log(typeof data[x].number) 查看“查看购物车”返回的数据里面对应的data[x]里面对应的商品数量 =number
+//               console.log(typeof (data[x].number))
+                console.log(data[x].number.constructor)
+                        //发现是string.将字符串转换成int型
+                        //shuval：装所有该页面里面的商品数量
+                        var num = data[x].number;
+                        price += parseInt(data[x].number*data[x].price)
+						shuval += parseInt(data[x].number);
+						//添加数据：value='${data[x].number}'动态获取商品的数量
+						$(".mainmain").append(`<div class='content'>
+							 				<div class='left'><img src="${data[x].goodsListImg}"></div>
+							 				<div class='center'><p>"${data[x].goodsName}"</p>
+							 				<p>"${data[x].goodsName}"</p><div class='pre'><p>单价:$</p>
+							 				<p>"${data[x].price}"</p></div><div class='shu'>
+							 				<p class='m'>数量:</p> <button class='jian'>-</button>
+							 				<input class='shuliang' value="${data[x].number}" type='text' />
+							 				<button class='jia'>+</button></div>
+							 				</div><div class='rightbtn'><img src='img/1530428433(1).jpg'/>
+							 				</div></div>`);
+					           }
+					   //跳出循环
+					   //将其得到的商品总数全部显示在对应的标签就行
+					   $(".n").text(shuval);
+					   $(".price").text(price);
+				},
+			});
+			//ajax结束
+			$(document).on("click", ".jian", function() {
+				//一定要找到你点击的是哪一个商品的数量进行加减。要找到其父亲，然后看看该父亲的索引号；
+				var num = $(this).parents(".content").index();
+				//alert(num)  你会发现索引号是0   num装的是父亲的索引号
+				var numval = $(".shuliang").eq(num).val();
+				//numval :装的是大范围下的input标签的值；
+				//但input里面标签值小于等于0时，数值直接写0，否则，商品直接 自－－ 并且将值显示在对应的input标签上就是
+				if(numval <= 0) {
+					numval = 0;
+				} else {
+					numval--;
+					$(".shuliang").eq(num).val(numval);
+				}
+				//获取相应商品下的商品ID
+				var goodsid = datashuju[num].goodsID;
+                // alert(goodsid) 弹出商品所对应的id号
+				 gengxin(numval, goodsid);
+			})
+			$(document).on("click", ".jia", function() {
+				//获取点击+号所对应的父元素索引。
+				var index = $(this).parents(".content").index();
+				//numval：把增加的数量添加到input这个标签中
+				var numval = $(".shuliang").eq(index).val();
+				//但这个商品数量大于等于0的时候满足条件就自加，并且要保存对应的值
+				if(numval >= 0) {
+					numval++;
+					$(".shuliang").eq(index).val(numval);
+				}
+			    //获取当前商品的ID号
+			    //提出问题：为什么要调用这个更新购物车函数呢？：因为：我上面点击仅仅是实现了数量的增加，想要实现  价格以及购物车总的更新，还需要
+				var goodsid = datashuju[index].goodsID;
+				gengxin(numval, goodsid);
+			})
+
+			//start删除商品数量
+			//获取点击事件的整个块  即找到其父亲   然后删掉他
+			$(document).on('click', ".rightbtn", function() {
+                //点击删除图标时,获取图标的父亲
+				var index = $(this).parents(".content").index();
+				//获取商品的id
+				var goodsid=datashuju[index].goodsID;
+				gengxin(0, goodsid);
+			})
+			//end删除商品数量
+
+			//购物车更新 
+			//购物车更新函数主要内容：传参
+			//这边其应该一起传一个登陆账号
+			function gengxin(num, goodsid) {
+				$.get("http://datainfo.duapp.com/shopdata/updatecar.php", {
+					userID: "lulululua",
+					goodsID: goodsid,
+					number: num
+				}, function(data) {
+					window.location.href = "shop.html";
+				})
+			}
+			//点击购物车 跳到购物车
+				$(document).on("click",".gouwuche",function(){
+					window.location.href="shop.html?";
+				})
+                //点击首页，回到首页
+                $(document).on("click",".shouye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击分类，一样回到首页
+                $(document).on("click",".fenye",function(){
+                	
+                	window.location.href="main1.html";
+                })
+                //点击我的秀。跳转到详情页面
+                 $(document).on("click",".woxiu",function(){
+                	window.location.href="details.html";
+                })
+                 //点击更多，跳转到详情页面
+                 $(document).on("click",".more",function(){
+                	window.location.href="redetails.html";
+                })
+		})
+	</script>
+
+</html>
